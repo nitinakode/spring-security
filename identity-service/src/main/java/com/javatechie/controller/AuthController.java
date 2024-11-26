@@ -26,7 +26,8 @@ public class AuthController {
     @PostMapping("/token")
     public String getToken(@RequestBody AuthRequest authRequest) {
 
-            return service.generateToken(authRequest.getUsername());
+
+            return service.generateToken(authRequest.getUsername(), "ADMIN");
 
     }
 

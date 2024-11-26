@@ -15,11 +15,24 @@ spring:
             - Path=/restaurant/**
           filters:
             - AuthenticationFilter
+        - id: restaurant-service
+          uri: lb://RESTAURANT-SERVICE
+          predicates:
+            - Path=/admin/**
+          filters:
+            - AuthenticationFilter
+
 
         - id: identity-service
           uri: lb://IDENTITY-SERVICE
           predicates:
             - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+        - id: identity-service
+          uri: lb://IDENTITY-SERVICE
+          predicates:
+            - Path=/123/**
           filters:
             - AuthenticationFilter
 

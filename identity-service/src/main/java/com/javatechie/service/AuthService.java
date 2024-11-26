@@ -18,13 +18,17 @@ public class AuthService {
     private JwtService jwtService;
 
     public String saveUser(UserCredential credential) {
+        if (credential.getRole() == null) {
+            credential.setRole("USER");
+        }
         credential.setPassword(passwordEncoder.encode(credential.getPassword()));
         repository.save(credential);
         return "user added to the system";
     }
 
-    public String generateToken(String username) {
-        return jwtService.generateToken(username);
+    public String generateToken(String username,String role2) {
+       String role= repository.findByName(username).get().getRole();
+        return jwtService.generateToken(username,role);
     }
 
     public void validateToken(String token) {

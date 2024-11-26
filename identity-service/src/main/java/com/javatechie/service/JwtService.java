@@ -27,8 +27,9 @@ public class JwtService {
     }
 
 
-    public String generateToken(String userName) {
+    public String generateToken(String userName, String role) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role); // Add the role to the token claims
         return createToken(claims, userName);
     }
 
@@ -38,8 +39,10 @@ public class JwtService {
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
+
 
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
